@@ -471,108 +471,185 @@ Estos mecanismos constituyen una aplicación directa de los objetivos de **auten
 
 ---
 
-## 8. UD01-C07 — Legislación sobre protección de datos de carácter personal
+## 8. Legislación sobre protección de datos de carácter personal
 
 <!-- content: UD01-C07 -->
 *Criterios de evaluación: RA5.a, RA5.b, RA5.c, RA5.d · Origen curricular: CB5.01*
 
 ### 8.1. Fundamento del derecho a la protección de datos
 
-El derecho a la intimidad es uno de los derechos fundamentales de las personas amparado por la **Constitución Española de 1978**. A partir de este principio constitucional se desarrolla la legislación específica sobre protección de datos personales, cuyo objetivo es **garantizar y proteger los derechos fundamentales, especialmente la intimidad de las personas físicas, en relación con sus datos personales**.
+La **Constitución Española de 1978** (art. 18.4) establece que la ley limitará el uso de la informática para garantizar el honor y la intimidad de las personas. A partir de ahí, la protección de datos se ha convertido en un **derecho fundamental**: toda persona tiene derecho a decidir quién usa sus datos personales y para qué.
 
-> En nuestra vida diaria, los datos personales son solicitados constantemente por empresas y organismos públicos para realizar trámites. Esta legislación afecta tanto a los profesionales técnicos (que diseñan y mantienen los sistemas que almacenan esos datos) como a cualquier ciudadano, puesto que sus propios datos están recogidos en ficheros sujetos a esta normativa.
+> En nuestra vida diaria damos datos personales constantemente: al matricularnos, al comprar online, al ir al médico o al registrarnos en una app. Como técnicos de sistemas, además, seremos quienes instalen y mantengan los equipos donde se guardan esos datos.
 
-### 8.2. La Ley Orgánica de Protección de Datos (LOPD)
+### 8.2. Normativa vigente
 
-La gestión de los datos personales en España está regulada por la **Ley Orgánica 15/1999, de 13 de diciembre, de Protección de Datos de Carácter Personal (LOPD)**, desarrollada reglamentariamente por el **RD 1720/2007** y supervisada por la **Agencia Española de Protección de Datos (AEPD)**.
+| Norma | Qué es | Ámbito |
+|---|---|---|
+| **RGPD** · Reglamento (UE) 2016/679 | Reglamento General de Protección de Datos. Se aplica directamente en todos los países de la UE desde el **25 de mayo de 2018**. | Toda la Unión Europea |
+| **LOPDGDD** · Ley Orgánica 3/2018 | Ley Orgánica de Protección de Datos Personales y garantía de los derechos digitales. Adapta el RGPD a España y añade **derechos digitales**. | España |
+| **AEPD** | Agencia Española de Protección de Datos. Autoridad que vigila el cumplimiento, atiende reclamaciones y sanciona. | España |
 
-La LOPD especifica, entre otros aspectos:
+> **Ojo:** la antigua LOPD (LO 15/1999) y su reglamento (RD 1720/2007) están **derogados**. Si encuentras documentación que habla de "inscribir ficheros" o de "niveles básico, medio y alto", es normativa antigua.
 
-- Para qué finalidades se pueden usar los datos personales.
-- Cómo debe ser el procedimiento de recogida de datos.
-- Qué derechos tienen las personas a las que se refieren esos datos.
+### 8.3. Conceptos básicos
 
-### 8.3. Ámbito de aplicación
+- **Dato personal:** cualquier información sobre una persona física identificada o identificable (nombre, DNI, foto, correo, matrícula del coche, dirección IP...).
+- **Tratamiento:** cualquier operación con datos personales: recoger, guardar, consultar, modificar, comunicar, borrar...
+- **Categorías especiales de datos** (datos especialmente protegidos): salud, origen étnico, ideología, religión, afiliación sindical, orientación sexual, datos genéticos y biométricos. Como regla general **está prohibido tratarlos** salvo excepciones (por ejemplo, consentimiento explícito).
+- **Consentimiento:** debe ser libre, informado, específico e inequívoco (una acción clara, como marcar una casilla). **No valen las casillas premarcadas.** En España, los menores pueden consentir por sí mismos a partir de los **14 años**.
 
-La LOPD se aplica a:
+### 8.4. Principios del tratamiento
 
-- Todos los **datos personales registrados en soporte físico** que los haga susceptibles de tratamiento.
-- Todos los tratamientos de datos efectuados en **territorio español**, o a los que les sea de aplicación la legislación española.
-- Los tratamientos realizados por un responsable situado **fuera de la Unión Europea** cuando trate datos situados en territorio español (salvo que se utilicen únicamente con fines de tránsito).
+Los datos personales deben tratarse respetando estos principios:
 
-La LOPD **no se aplica** cuando:
+| Principio | Idea clave | Ejemplo |
+|---|---|---|
+| Licitud, lealtad y transparencia | Hay que tener una base legal e informar a la persona. | Avisar de para qué se piden los datos en un formulario. |
+| Limitación de la finalidad | Solo se usan para el fin indicado. | Los datos de la matrícula no se usan para publicidad. |
+| Minimización | Pedir solo los datos necesarios. | Para un boletín de noticias basta el correo, no el DNI. |
+| Exactitud | Datos correctos y actualizados. | Corregir una dirección errónea. |
+| Limitación del plazo de conservación | No guardarlos más tiempo del necesario. | Borrar currículums de procesos de selección cerrados. |
+| Integridad y confidencialidad | Protegerlos con medidas de seguridad. | Contraseñas, cifrado, copias de seguridad. |
+| Responsabilidad proactiva | La empresa debe poder **demostrar** que cumple. | Documentar las medidas aplicadas. |
 
-- Los ficheros pertenecen a personas físicas y se destinan exclusivamente a **actividades domésticas**.
-- Los ficheros están sometidos a normativa sobre **materias clasificadas** (terrorismo, delincuencia organizada, secretos oficiales).
+### 8.5. Ámbito de aplicación
 
-### 8.4. Niveles de seguridad
+El RGPD y la LOPDGDD se aplican:
 
-Siempre que se vaya a crear un fichero con datos de carácter personal es necesario solicitar su inscripción/aprobación ante la Agencia de Protección de Datos, especificando determinados datos del fichero.
+- A los tratamientos de datos personales, **automatizados o en papel** (si están organizados en ficheros).
+- A empresas y organismos **establecidos en la UE**.
+- A empresas **de fuera de la UE** que ofrezcan bienes o servicios a personas que están en la UE o que controlen su comportamiento (por ejemplo, una red social estadounidense).
 
-El **nivel de seguridad** exigible a un fichero es el más alto que corresponda a los datos que contiene. Por ejemplo: si un fichero contiene únicamente datos identificativos básicos, su nivel es **básico**; pero si además incluye datos especialmente protegidos (como la afiliación sindical, la salud o la ideología), el nivel exigido pasa a ser **alto**, con independencia de que el resto de los datos del fichero sean de nivel básico.
+**No se aplican** a:
+
+- Tratamientos de una persona física en **actividades exclusivamente personales o domésticas** (la agenda del móvil, las fotos familiares).
+- Datos de **personas fallecidas** (con algunas excepciones de la LOPDGDD) ni de **personas jurídicas** (empresas).
+- Materias clasificadas, prevención e investigación de delitos (tienen normativa propia).
+
+### 8.6. Figuras que intervienen
+
+| Figura | Quién es | Ejemplo en un instituto |
+|---|---|---|
+| **Interesado** | La persona cuyos datos se tratan. | El alumnado y sus familias. |
+| **Responsable del tratamiento** | Decide para qué y cómo se tratan los datos. | La Consejería de Educación / el centro. |
+| **Encargado del tratamiento** | Trata los datos **por cuenta** del responsable. Necesita un contrato. | La empresa que da el servicio de plataforma educativa en la nube. |
+| **Delegado de Protección de Datos (DPD/DPO)** | Asesora y supervisa el cumplimiento. Obligatorio en organismos públicos y en algunas empresas. | El DPD de la Consejería. |
+| **Autoridad de control (AEPD)** | Vigila, resuelve reclamaciones y sanciona. | Atiende la reclamación de una familia. |
+
+### 8.7. Derechos de las personas
+
+Los interesados pueden ejercer gratuitamente estos derechos ante el responsable, que en general debe responder en **un mes**:
+
+| Derecho | Permite... |
+|---|---|
+| **Acceso** | Saber si se tratan mis datos, cuáles y para qué; obtener una copia. |
+| **Rectificación** | Corregir datos inexactos o incompletos. |
+| **Supresión** ("derecho al olvido") | Pedir que se borren mis datos cuando ya no son necesarios o retiro el consentimiento. |
+| **Oposición** | Oponerme a un tratamiento (por ejemplo, publicidad). |
+| **Limitación del tratamiento** | "Congelar" el uso de mis datos mientras se resuelve una reclamación. |
+| **Portabilidad** | Recibir mis datos en un formato estándar para llevarlos a otra empresa. |
+| **No ser objeto de decisiones automatizadas** | Que una decisión importante sobre mí no la tome solo un algoritmo. |
+
+> **Truco para recordarlos:** los antiguos derechos ARCO (Acceso, Rectificación, Cancelación, Oposición) se amplían ahora con supresión (sustituye a cancelación), limitación y portabilidad.
+
+**Derechos digitales** (novedad de la LOPDGDD, título X), entre otros: derecho a la **desconexión digital** en el trabajo, a la intimidad frente al uso de dispositivos y videovigilancia en el trabajo, a la **educación digital** y al testamento digital.
+
+### 8.8. Seguridad de los datos (relación con RA5.b)
+
+El RGPD **ya no fija niveles de seguridad cerrados**. Se basa en el **enfoque de riesgo**: el responsable debe analizar los riesgos y aplicar las **medidas técnicas y organizativas apropiadas** (art. 32 RGPD), por ejemplo:
+
+- Control de acceso: usuarios, contraseñas robustas, permisos mínimos necesarios.
+- Cifrado y seudonimización de los datos.
+- Copias de seguridad para poder recuperar los datos.
+- Registro y revisión periódica de las medidas.
+
+Cuanto más sensibles sean los datos (por ejemplo, de salud), mayores deben ser las medidas.
+
+Otras obligaciones relacionadas con la seguridad:
+
+- **Registro de actividades de tratamiento:** documento interno donde se describen los tratamientos (sustituye a la antigua inscripción de ficheros en la AEPD).
+- **Notificación de brechas de seguridad:** si se pierden, roban o filtran datos personales, el responsable debe avisar a la AEPD en un máximo de **72 horas** y, si el riesgo es alto, también a los afectados.
+- **Evaluación de impacto (EIPD):** obligatoria antes de tratamientos de alto riesgo.
 
 <!-- content: UD01-C07 -->
 ```mermaid
-flowchart TD
-    F[Fichero de datos personales] --> B[Nivel básico: datos identificativos]
-    F --> M[Nivel medio: p.ej. datos relativos a infracciones]
-    F --> A[Nivel alto: datos especialmente protegidos<br/>salud, ideología, afiliación sindical...]
-    A -->|Prevalece sobre| B
-    A -->|Prevalece sobre| M
+flowchart LR
+    R[Responsable] -->|analiza| RI[Riesgos del tratamiento]
+    RI -->|decide| M[Medidas técnicas y organizativas]
+    M --> D[Datos protegidos]
+    B[Brecha de seguridad] -->|máx. 72 h| AEPD[Aviso a la AEPD]
 ```
 
-### 8.5. Infracciones y sanciones
+### 8.9. Infracciones y sanciones
 
-La LOPD clasifica las infracciones en tres niveles de gravedad, con rangos sancionadores crecientes:
+**Multas máximas del RGPD:**
 
-| Gravedad | Rango de sanción | Ejemplos de infracción |
+| Tipo | Multa máxima |
+|---|---|
+| Infracciones de obligaciones del responsable o encargado (por ejemplo, no aplicar medidas de seguridad, no notificar una brecha) | Hasta **10 millones de €** o el **2 %** de la facturación anual mundial (la cantidad mayor) |
+| Infracciones de principios, consentimiento o derechos de los interesados | Hasta **20 millones de €** o el **4 %** de la facturación anual mundial (la cantidad mayor) |
+
+**Clasificación de la LOPDGDD** (a efectos de prescripción):
+
+| Gravedad | Prescribe en | Ejemplos |
 |---|---|---|
-| **Leve** | Entre 900 € y 40.000 € | No notificar a la AEPD las comunicaciones previstas; no solicitar la inscripción del fichero en el Registro General de Protección de Datos; recopilar datos sin informar previamente; no atender solicitudes de rectificación o cancelación. |
-| **Grave** | Entre 40.001 € y 300.000 € | No inscribir los ficheros en la AEPD; utilizar los ficheros con una finalidad distinta a la que motivó su creación; no contar con el consentimiento del interesado; no permitir el acceso a los ficheros; mantener datos inexactos sin corregirlos; no seguir los principios y garantías de la LOPD. |
-| **Muy grave** | Entre 300.001 € y 600.000 € | Crear ficheros para almacenar datos especialmente protegidos sin cobertura legal; recoger datos de forma engañosa o fraudulenta; recabar datos especialmente protegidos sin autorización; vulnerar el secreto sobre datos especialmente protegidos; ceder datos sin estar permitido; transferir datos a países sin un nivel de protección equiparable sin autorización. |
+| **Muy grave** | 3 años | Tratar datos sin base legal o sin consentimiento válido; tratar categorías especiales sin cumplir los requisitos; no atender reiteradamente los derechos de los interesados; transferencias internacionales ilegales. |
+| **Grave** | 2 años | No aplicar las medidas de seguridad adecuadas; no notificar una brecha a la AEPD; no tener DPD cuando es obligatorio; tratar datos de un menor sin consentimiento válido. |
+| **Leve** | 1 año | Incumplimientos formales del deber de informar; no responder a una solicitud de derechos en plazo (sin ser reiterado). |
 
-> **Caso práctico tipo** (recogido en la documentación de la unidad, referido a una agencia de viajes ficticia "SiTour"): identificar si un determinado comportamiento de la empresa (por ejemplo, enviar publicidad sin haber dado de alta el fichero de clientes, o no realizar copias de seguridad del fichero de datos) constituye una infracción leve, grave o muy grave, razonando la clasificación según la tabla anterior.
+> **Caso práctico tipo (agencia de viajes ficticia "SiTour"):** razona qué principio o derecho se incumple en cada situación y su gravedad. Por ejemplo, enviar publicidad a clientes que no dieron su consentimiento (principio de licitud → muy grave según la LOPDGDD; además, si es por correo electrónico, infracción de la LSSI-CE) o no hacer copias de seguridad de los datos de clientes (falta de medidas de seguridad → grave).
 
-### 8.6. Relación con los criterios de evaluación de RA5
+### 8.10. Relación con los criterios de evaluación de RA5
 
-- **RA5.a** (describir la legislación de protección de datos) se cubre mediante el desarrollo completo de la LOPD: origen, ámbito y finalidad.
-- **RA5.b** (necesidad de controlar el acceso a la información personal almacenada) queda reflejado en los niveles de seguridad y en las infracciones relacionadas con el acceso no autorizado o la ausencia de medidas de seguridad.
-- **RA5.c** (figuras legales que intervienen en el tratamiento de los ficheros) se relaciona con la **Agencia Española de Protección de Datos** como organismo supervisor, y con el responsable del fichero como figura obligada al cumplimiento de la ley.
-- **RA5.d** (obligación de poner a disposición de las personas sus datos) se relaciona con los derechos de acceso, rectificación, cancelación y oposición que la LOPD reconoce a los interesados, cuyo incumplimiento constituye infracción.
+- **RA5.a** (describir la legislación de protección de datos): RGPD, LOPDGDD, principios y ámbito de aplicación.
+- **RA5.b** (necesidad de controlar el acceso a la información personal almacenada): enfoque de riesgo, medidas de seguridad, brechas.
+- **RA5.c** (figuras legales que intervienen en el tratamiento): interesado, responsable, encargado, DPD y AEPD.
+- **RA5.d** (deber de poner a disposición de las personas sus datos): derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad.
 
 ---
 
-## 9. UD01-C08 — Legislación sobre servicios de la sociedad de la información
+## 9. Legislación sobre servicios de la sociedad de la información
 
 <!-- content: UD01-C08 -->
 *Criterios de evaluación: RA5.e · Origen curricular: CB5.02*
 
 ### 9.1. La Ley 34/2002 (LSSI-CE)
 
-La **Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE)** regula el régimen jurídico de los servicios de la sociedad de la información y de la contratación por vía electrónica, aplicándose a las empresas que prestan estos servicios y que están establecidas en España o en otros estados miembros de la Unión Europea.
+La **Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE)** sigue **vigente** (con varias modificaciones). Regula las actividades económicas que se realizan por Internet: tiendas online, publicidad por correo electrónico, servicios de alojamiento web, buscadores, etc.
 
-La regulación de los servicios de la sociedad de la información es, además, competencia de organismos específicos; la documentación de la unidad menciona en este contexto a la **Comisión del Mercado de las Telecomunicaciones (CMT)**, encargada de establecer normas y procedimientos para los mercados nacionales de comunicaciones electrónicas y servicios audiovisuales.
+Se aplica a los prestadores de servicios establecidos en España y, en algunos aspectos, a los de otros países de la UE o de fuera que dirijan sus servicios a España.
+
+> **Actualización:** la CMT (Comisión del Mercado de las Telecomunicaciones) que aparece en documentación antigua desapareció en 2013 y se integró en la **CNMC**. La supervisión de la LSSI-CE corresponde hoy al **Ministerio** competente en transformación digital y, en materia de **spam y cookies**, a la **AEPD**.
 
 ### 9.2. Aspectos más destacados de la LSSI-CE
 
-| Aspecto regulado | Contenido |
+| Aspecto | Qué establece |
 |---|---|
-| **Información obligatoria** | Las empresas afectadas deben proporcionar información clara sobre su nombre, domicilio, dirección de correo electrónico, número de identificación fiscal y precio de sus productos o servicios. |
-| **Exención de responsabilidad** | Las empresas dedicadas al alojamiento o almacenamiento de datos (o a enlazar contenidos de terceros) quedan exentas de responsabilidad siempre que no tengan conocimiento efectivo de que esa información es ilícita. |
-| **Validez de los contratos electrónicos** | Se establece la plena validez legal de los contratos realizados por vía electrónica. |
+| **Información obligatoria (art. 10)** | La web debe mostrar de forma accesible: nombre o razón social, domicilio, correo electrónico, NIF, datos de registro y precios claros (indicando impuestos y gastos de envío). Es el típico **"Aviso legal"**. |
+| **Comunicaciones comerciales (arts. 20 y 21)** | La publicidad debe identificarse como tal y el anunciante debe ser identificable. **Prohibido enviar publicidad por correo electrónico o SMS sin consentimiento previo** (spam), salvo a clientes con relación previa y sobre productos similares, siempre ofreciendo una forma sencilla de darse de baja. |
+| **Cookies (art. 22.2)** | Para instalar cookies no técnicas (analíticas, publicitarias) hay que **informar y obtener el consentimiento** del usuario. Por eso aparecen los banners de cookies. |
+| **Contratación electrónica** | Los contratos celebrados por vía electrónica tienen **plena validez**. El vendedor debe enviar confirmación de la compra. |
+| **Responsabilidad de los intermediarios** | Los proveedores de alojamiento o enlaces **no son responsables** de los contenidos ilícitos de terceros si no tienen conocimiento efectivo de ellos, pero deben retirarlos cuando lo tengan. |
 
-### 9.3. Relación entre LOPD y LSSI-CE
+**Sanciones LSSI-CE:**
 
-Aunque ambas leyes regulan aspectos distintos, resulta útil compararlas para fijar las diferencias de ámbito:
+| Gravedad | Multa |
+|---|---|
+| Leve | Hasta 30.000 € |
+| Grave | De 30.001 € a 150.000 € |
+| Muy grave | De 150.001 € a 600.000 € |
 
-| | LOPD (LO 15/1999) | LSSI-CE (Ley 34/2002) |
+### 9.3. Relación entre RGPD/LOPDGDD y LSSI-CE
+
+| | RGPD + LOPDGDD | LSSI-CE (Ley 34/2002) |
 |---|---|---|
-| **Objeto principal** | Protección de los datos de carácter personal. | Régimen jurídico de los servicios de la sociedad de la información y el comercio electrónico. |
-| **Organismo supervisor** | Agencia Española de Protección de Datos (AEPD). | Comisión del Mercado de las Telecomunicaciones (CMT, según la documentación de la unidad). |
-| **Ámbito típico de aplicación** | Cualquier fichero con datos personales. | Empresas que prestan servicios de la sociedad de la información (p. ej. comercio electrónico) establecidas en España o la UE. |
-| **CE asociado** | RA5.a, RA5.b, RA5.c, RA5.d | RA5.e |
+| **Qué protege** | Los datos personales, en cualquier soporte. | La actividad comercial y los servicios prestados por Internet. |
+| **Organismo supervisor** | AEPD | Ministerio de transformación digital; AEPD en spam y cookies. |
+| **Ejemplo típico** | Una clínica guarda historiales de pacientes. | Una tienda online muestra su aviso legal y envía publicidad por correo. |
+| **Criterio asociado** | RA5.a, RA5.b, RA5.c, RA5.d | RA5.e |
 
-> **Error frecuente**: pensar que ambas leyes regulan lo mismo porque las dos "tienen que ver con Internet". En realidad, la LOPD se centra en la protección del dato personal en sí (independientemente del medio en que se trate), mientras que la LSSI-CE regula específicamente la actividad de prestación de servicios de la sociedad de la información y el comercio electrónico (obligaciones de información, validez de los contratos electrónicos, responsabilidad de los intermediarios).
+> **Error frecuente:** pensar que ambas leyes regulan lo mismo porque "las dos tienen que ver con Internet". El RGPD protege a la **persona y sus datos**, en papel o en digital. La LSSI-CE regula a las **empresas que prestan servicios por Internet**. Muchas veces se aplican las dos a la vez: una tienda online debe cumplir la LSSI-CE (aviso legal, cookies, spam) y el RGPD (datos de sus clientes).
 
 ---
 
