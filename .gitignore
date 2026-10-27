@@ -8,6 +8,11 @@
 # Ignorar cualquier carpeta llamada "soluciones" dentro de la carpeta "materiales"
 /materiales/**/soluciones/
 /materiales/examenes/
+/materiales/rubricas/
 
 # Ignorar cualquier archivo que contenga el nombre "examen" 
 *examen*
+
+# Ignorar practicas concretas
+/materiales/practicas/enunciados/UD01_practica_01.md
+/materiales/practicas/enunciados/UD01_practica_02.md
