@@ -1,4 +1,4 @@
-# Práctica técnica · UD01 · Documento 1 de 2 (versión Windows)
+# Práctica técnica · UD01
 ## Parte guiada — Montaje del laboratorio y primeros pasos con Nmap
 
 > **IMPORTANTE:** este documento es la **parte guiada y NO evaluable**. Sirve para montar el laboratorio y aprender a usar las herramientas con ayuda. **No se entrega**, pero es **obligatorio** haberla realizado antes de pasar al Documento 2 (la parte evaluable).
