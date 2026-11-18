@@ -1,4 +1,4 @@
-# Práctica técnica · UD01
+# Práctica técnica · UD01 · Documento 1 de 2
 ## Parte guiada — Montaje del laboratorio y primeros pasos con Nmap
 
 > **IMPORTANTE:** este documento es la **parte guiada y NO evaluable**. Sirve para montar el laboratorio y aprender a usar las herramientas con ayuda. **No se entrega**, pero es **obligatorio** haberla realizado antes de pasar al Documento 2 (la parte evaluable).
@@ -521,6 +521,93 @@ VBoxManage startvm Kali
 
 Nmap es la herramienta de **fingerprinting** que cita la UD01: sirve para descubrir qué equipos hay, qué puertos tienen abiertos y qué servicios y versiones ejecutan.
 
+### Antes de empezar: puertos, servicios y estados
+
+Para entender lo que te va a mostrar Nmap necesitas tener claros tres conceptos: **puerto**, **servicio** y **estado de un puerto**. Léelo con calma: lo vas a necesitar en toda la práctica y en el informe evaluable.
+
+#### ¿Qué es un puerto?
+
+La **dirección IP** identifica a **un equipo** dentro de la red. Pero un mismo equipo puede ofrecer muchas cosas a la vez: páginas web, correo, transferencia de archivos, acceso remoto... Para saber a cuál de ellas va dirigido cada mensaje se usan los **puertos**.
+
+> **Comparación:** la IP es la dirección de un edificio y el puerto es el número de la puerta. Para entregar un paquete en el sitio correcto hacen falta las dos cosas.
+
+- Un puerto es un **número entre 0 y 65 535**.
+- Se escribe detrás de la IP, separado por dos puntos: `10.10.10.10:80` significa "el puerto 80 del equipo 10.10.10.10".
+- Existen dos protocolos de transporte, y **cada uno tiene sus propios puertos**:
+
+| Protocolo | Cómo funciona | Ejemplos de uso |
+|---|---|---|
+| **TCP** | Antes de enviar datos **establece una conexión** (el "saludo en tres pasos": `SYN` → `SYN-ACK` → `ACK`) y comprueba que todo llega bien y en orden. Es fiable, pero algo más lento. | Web, SSH, FTP, correo |
+| **UDP** | Envía los datos **sin conexión previa** y sin confirmar que llegan. Es más rápido, pero menos fiable. | DNS, DHCP, vídeo en directo, juegos en línea |
+
+Por eso Nmap escribe `80/tcp` o `53/udp`: el puerto 80 de TCP y el puerto 80 de UDP son puertas distintas. **Por defecto Nmap solo revisa TCP**; para UDP hay que pedirlo expresamente (`sudo nmap -sU`), y es mucho más lento.
+
+Los puertos se agrupan en **tres rangos**:
+
+| Rango | Nombre | Para qué se usan |
+|---|---|---|
+| 0 – 1023 | **Puertos bien conocidos** (*well-known ports*) | Servicios clásicos y estandarizados (web, correo, FTP...). En Linux solo el administrador puede poner un servicio a escuchar en ellos. |
+| 1024 – 49 151 | **Puertos registrados** | Aplicaciones concretas: bases de datos, servidores de juegos, programas de gestión... |
+| 49 152 – 65 535 | **Puertos dinámicos o privados** | Los usa tu propio equipo de forma temporal, como "puerto de origen", cuando se conecta a otro. |
+
+Algunos puertos bien conocidos que conviene **memorizar**:
+
+| Puerto | Servicio | Para qué sirve |
+|---|---|---|
+| 21/tcp | FTP | Transferir archivos (**sin cifrar**) |
+| 22/tcp | SSH | Acceso remoto a la terminal (cifrado) |
+| 23/tcp | Telnet | Acceso remoto a la terminal (**sin cifrar**, obsoleto) |
+| 25/tcp | SMTP | Envío de correo |
+| 53/udp y 53/tcp | DNS | Traducir nombres (`www.ejemplo.com`) a direcciones IP |
+| 80/tcp | HTTP | Páginas web (**sin cifrar**) |
+| 443/tcp | HTTPS | Páginas web (cifradas) |
+| 3389/tcp | RDP | Escritorio remoto de Windows |
+
+> Que un servicio vaya **sin cifrar** significa que todo lo que viaja por él, **incluidos usuarios y contraseñas**, lo puede leer cualquiera que capture el tráfico de la red.
+
+#### ¿Qué es un servicio?
+
+Un **servicio** es un **programa que se queda funcionando en segundo plano, "escuchando" en un puerto**, a la espera de que alguien se conecte. Cuando decimos que un puerto está abierto, en realidad queremos decir que **hay un servicio escuchando detrás**.
+
+Fíjate en que hay que distinguir tres cosas distintas:
+
+| Concepto | Ejemplo | Explicación |
+|---|---|---|
+| **Tipo de servicio (protocolo)** | `http` | El "idioma" que se habla en ese puerto. |
+| **Programa (producto)** | `Apache httpd` | El software concreto que ofrece ese servicio. Para un mismo protocolo hay varios programas: Apache, Nginx e IIS son todos servidores web. |
+| **Versión** | `2.4.58` | La edición concreta de ese programa. |
+
+**¿Por qué importa tanto la versión?** Porque las **vulnerabilidades** afectan a **versiones concretas de programas concretos**. Si un servidor tiene una versión antigua y sin actualizar, es muy probable que tenga fallos ya publicados (con su código **CVE**) que cualquiera puede consultar... y aprovechar. Por eso tanto un atacante como un auditor quieren saber **exactamente** qué programa y qué versión hay detrás de cada puerto.
+
+Además, **cada servicio abierto es una puerta más que hay que vigilar**. Un principio básico de seguridad es tener activos **solo los servicios imprescindibles**; a esto se le llama **reducir la superficie de ataque**.
+
+#### Estados de un puerto
+
+Nmap clasifica cada puerto que revisa en uno de estos estados:
+
+| Estado | Qué significa | Comparación |
+|---|---|---|
+| `open` (abierto) | Hay un servicio escuchando que **acepta conexiones**. Es lo que más nos interesa. | Llamas a la puerta y alguien abre. |
+| `closed` (cerrado) | El equipo responde, pero **no hay ningún servicio** en ese puerto. | Llamas y alguien contesta desde dentro: "aquí no vive nadie". |
+| `filtered` (filtrado) | Nmap **no recibe respuesta**: normalmente un **cortafuegos** está bloqueando el paso, así que no puede saber si está abierto o cerrado. | Llamas y no contesta nadie: no sabes si no hay nadie o si un portero no te deja ni llegar a la puerta. |
+
+> A veces verás estados combinados como `open|filtered`: significa que Nmap duda entre los dos (es habitual en los escaneos UDP).
+
+#### ¿Qué cabe esperar al escanear Metasploitable 2?
+
+Metasploitable 2 es una máquina **hecha vulnerable a propósito** para practicar. Es justo lo contrario de un servidor bien configurado, así que cuando la escanees:
+
+- Verás **muchísimos puertos abiertos** (más de veinte). Un servidor real suele tener solo unos pocos: un servidor web bien configurado puede tener abiertos únicamente el 22, el 80 y el 443.
+- Encontrarás servicios **muy variados** en la misma máquina: transferencia de archivos, acceso remoto, web, correo, bases de datos, compartición de archivos...
+- Algunos de esos servicios son **inseguros por diseño** (envían las contraseñas sin cifrar) y hoy no deberían estar activos en ningún servidor.
+- Las **versiones** son **muy antiguas** (de hace más de quince años) y nunca se han actualizado. Muchas tienen vulnerabilidades conocidas, y alguna incluso contiene una **puerta trasera** (*backdoor*).
+- El sistema operativo que estime Nmap será un **Linux antiguo**.
+- Los puertos que no aparecen en la lista estarán **`closed`**, no `filtered`, porque Metasploitable **no tiene cortafuegos**.
+
+> **Si algo no cuadra:** si Nmap dice `Host seems down`, te salen 0 puertos abiertos o todos aparecen como `filtered`, lo más probable es que hayas escrito mal la IP o que Metasploitable no esté encendida o no esté conectada a la red `labSI`. Repasa los apartados 1.10 y 1.11.
+
+> **Ojo:** aquí no te damos la lista de puertos y servicios de Metasploitable. Descubrirla e **interpretarla** es precisamente tu trabajo en el **Documento 2** (parte evaluable).
+
 **Paso 1 · Descubrir si el objetivo está activo**
 
 ```bash
@@ -552,6 +639,83 @@ sudo nmap -O <IP_del_objetivo>
 ```
 
 `-O` intenta adivinar el sistema operativo del objetivo.
+
+### Cómo interpretar los resultados de Nmap
+
+Ejecutar Nmap es fácil; lo que distingue a un auditor es **saber leer lo que devuelve**. Vamos a desmontar la salida de `nmap -sV` línea a línea. Tu salida tendrá **muchas más líneas** en la tabla y algunos datos distintos (hora, tiempos, número de puertos...):
+
+```
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-11-18 10:15 CET
+Nmap scan report for 10.10.10.10
+Host is up (0.00045s latency).
+Not shown: ??? closed tcp ports (conn-refused)
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 2.3.4
+80/tcp open  http    Apache httpd 2.2.8 ((Ubuntu) DAV/2)
+...
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 15.32 seconds
+```
+
+#### Las líneas de alrededor de la tabla
+
+| Línea | Qué te dice |
+|---|---|
+| `Starting Nmap 7.95 ... at ...` | Versión de Nmap y **fecha y hora** del escaneo. En un informe es una evidencia importante: demuestra **cuándo** se hizo. |
+| `Nmap scan report for 10.10.10.10` | A qué equipo corresponde el resultado. **Comprueba siempre que es la IP de Metasploitable.** |
+| `Host is up (0.00045s latency)` | El equipo está activo. La **latencia** es lo que tarda en responder; en una red interna es casi cero. |
+| `Not shown: ... closed tcp ports` | Por defecto Nmap revisa **1000 puertos**, pero no lista los cerrados para no llenar la pantalla. Te dice cuántos ha ocultado y por qué: `conn-refused` o `reset` significa que el equipo contestó "aquí no hay nadie". |
+| `Service Info:` | Datos extra que Nmap ha deducido de los servicios: sistema operativo, nombre del equipo... |
+| `MAC Address: 08:00:27:...` | Solo aparece si ejecutas Nmap con `sudo`. Es la dirección física de la tarjeta de red. Si el fabricante que indica es *Oracle VirtualBox*, estás ante una **máquina virtual**. |
+| `Nmap done: 1 IP address (1 host up) scanned in ... seconds` | Resumen final: cuántas IP se han revisado, cuántas estaban activas y cuánto ha tardado. |
+
+#### La tabla, columna a columna
+
+| Columna | Ejemplo | Cómo leerla |
+|---|---|---|
+| `PORT` | `21/tcp` | **Número de puerto / protocolo** (TCP o UDP). |
+| `STATE` | `open` | El **estado** del puerto (`open`, `closed`, `filtered`). Casi siempre verás `open`, porque los cerrados se ocultan. |
+| `SERVICE` | `ftp` | El **tipo de servicio**. **Cuidado:** sin `-sV` es solo una **suposición** a partir del número de puerto (Nmap consulta una lista: "el 21 suele ser FTP"). Con `-sV` lo ha **comprobado** hablando con el servicio. Si aparece con interrogación (`http?`), Nmap no está seguro. |
+| `VERSION` | `vsftpd 2.3.4` | Solo aparece con `-sV`. Indica el **programa** y su **versión**, y a veces información extra entre paréntesis. Si está vacía, Nmap no ha conseguido identificarlo. |
+
+Ejemplo de cómo "traducir" una línea completa:
+
+```
+80/tcp open  http    Apache httpd 2.2.8 ((Ubuntu) DAV/2)
+```
+
+> "En el **puerto 80** (protocolo **TCP**) hay un servicio **abierto** que habla **HTTP**, es decir, un **servidor web**. El programa es **Apache httpd**, versión **2.2.8**, preparado para **Ubuntu** y con el módulo **DAV/2** activado."
+
+#### La salida de `sudo nmap -O`
+
+| Línea | Qué te dice |
+|---|---|
+| `Device type: general purpose` | Tipo de dispositivo: un equipo de propósito general (no un router, una impresora...). |
+| `Running: Linux 2.6.X` | **Familia** del sistema operativo y versión aproximada del núcleo. |
+| `OS details: ...` | Estimación más detallada, normalmente un **rango** de versiones. |
+| `Network Distance: 1 hop` | A cuántos "saltos" (routers) está el objetivo. **1 salto** = está en tu misma red. |
+
+> Recuerda que `-O` es una **estimación**: Nmap la deduce de cómo responde el equipo a ciertos paquetes. Nunca la presentes en un informe como una certeza.
+
+#### Piensa como un auditor
+
+Para **cada** puerto abierto que encuentres, hazte estas preguntas:
+
+1. **¿Es necesario este servicio?** Si nadie lo usa, debería estar desactivado.
+2. **¿Va cifrado?** Si no, las contraseñas viajan a la vista de cualquiera.
+3. **¿La versión es actual o antigua?** Si es antigua, busca si tiene vulnerabilidades conocidas (**CVE**).
+4. **¿Qué podría pasar si alguien lo aprovechara?** Leer datos, entrar en el sistema, tirar el servicio...
+
+*Ejemplo ficticio (no es de Metasploitable):* en un escaneo aparece `3389/tcp open ms-wbt-server`. Es el **Escritorio remoto de Windows** (RDP). Si ese servidor no necesita que nadie se conecte desde fuera, ese puerto abierto es un riesgo innecesario: lo correcto sería **desactivarlo** o, como mínimo, **limitar con el cortafuegos** quién puede conectarse.
+
+#### Errores típicos al interpretar
+
+- **Fiarse de `SERVICE` sin haber usado `-sV`.** Un servicio puede estar escuchando en un puerto que no es el suyo habitual; solo `-sV` lo comprueba.
+- **Pensar que `open` significa "vulnerable".** Un puerto abierto es una **posible** vía de entrada; que sea vulnerable depende del programa, de su versión y de su configuración.
+- **Pensar que Nmap lo ha revisado todo.** Sin opciones solo mira los **1000 puertos TCP más habituales** de los 65 535 posibles. Para revisarlos todos se usa `-p-` (tarda bastante más).
+- **Presentar la estimación del sistema operativo como un dato seguro.**
 
 Observa, comenta en clase lo que ves y practica los comandos hasta que entiendas qué hace cada uno. Cuando lo tengas claro, pasa al **Documento 2: parte evaluable (informe de auditoría)**.
 
